@@ -1,0 +1,14 @@
+# Sistema operativo / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# Config local de Claude Code (específica de esta máquina)
+.claude/settings.local.json
+
+# Seguridad extra: nunca subir archivos de entorno con secretos,
+# aunque backend/ y frontend/ ya tienen su propio .gitignore para esto.
+**/.env
+**/.env.local
+**/.env.*.local

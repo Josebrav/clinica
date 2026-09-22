@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+model Doctor {
+  id           String   @id @default(cuid())
+  nombre       String
+  apellido     String
+  especialidad String
+  fotoUrl      String?
+  descripcion  String?
+  activo       Boolean  @default(true)
+  username     String?  @unique
+  passwordHash String?
+  turnos       Turno[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum EstadoTurno {
+  DISPONIBLE
+  RESERVADO
+}
+
+model Turno {
+  id                String      @id @default(cuid())
+  doctor            Doctor      @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  doctorId          String
+  fecha             String
+  horaInicio        String
+  estado            EstadoTurno @default(DISPONIBLE)
+  pacienteNombre    String?
+  pacienteTelefono  String?
+  notas             String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+}
+
+enum RolAdmin {
+  SECRETARIA
+  JEFA
+}
+
+model Secretaria {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  rol          RolAdmin @default(SECRETARIA)
+}
+
+enum TipoMovimiento {
+  INGRESO
+  EGRESO
+}
+
+model Movimiento {
+  id        String         @id @default(cuid())
+  tipo      TipoMovimiento
+  monto     Float
+  concepto  String
+  fecha     String
+  creadoPor String?
+  createdAt DateTime       @default(now())
+}
