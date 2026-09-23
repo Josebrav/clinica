@@ -71,7 +71,10 @@ export default function AdminEstadisticasPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold">Estadísticas</h1>
+      <h1 className="text-2xl font-bold text-gray-900">Estadísticas</h1>
+      <p className="mt-1 mb-6 text-sm text-gray-500">
+        Turnos por médico, ocupación y resumen financiero.
+      </p>
 
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard

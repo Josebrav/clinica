@@ -99,7 +99,10 @@ export default function AdminFinanzasPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold">Finanzas</h1>
+      <h1 className="text-2xl font-bold text-gray-900">Finanzas</h1>
+      <p className="mt-1 mb-6 text-sm text-gray-500">
+        Registrar ingresos y egresos, y ver el balance.
+      </p>
 
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="flex items-center gap-3 rounded-xl border bg-white p-5 shadow-sm">

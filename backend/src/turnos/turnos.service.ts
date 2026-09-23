@@ -10,6 +10,16 @@ import { PrismaService } from '../prisma/prisma.service';
 import { AsignarTurnoDto } from './dto/asignar-turno.dto';
 import { CreateTurnoDto } from './dto/create-turno.dto';
 
+const doctorSelectSeguro = {
+  id: true,
+  nombre: true,
+  apellido: true,
+  especialidad: true,
+  fotoUrl: true,
+  descripcion: true,
+  activo: true,
+} as const;
+
 @Injectable()
 export class TurnosService {
   constructor(private readonly prisma: PrismaService) {}
@@ -21,7 +31,7 @@ export class TurnosService {
         ...(doctorId ? { doctorId } : {}),
       },
       orderBy: [{ fecha: 'asc' }, { horaInicio: 'asc' }],
-      include: { doctor: true },
+      include: { doctor: { select: doctorSelectSeguro } },
     });
   }
 
@@ -29,6 +39,7 @@ export class TurnosService {
     requester: AuthUser,
     doctorId?: string,
     estado?: EstadoTurno,
+    fecha?: string,
   ) {
     const doctorIdFiltro =
       requester.role === 'MEDICO' ? requester.doctorId : doctorId;
@@ -37,9 +48,10 @@ export class TurnosService {
       where: {
         ...(doctorIdFiltro ? { doctorId: doctorIdFiltro } : {}),
         ...(estado ? { estado } : {}),
+        ...(fecha ? { fecha } : {}),
       },
       orderBy: [{ fecha: 'asc' }, { horaInicio: 'asc' }],
-      include: { doctor: true },
+      include: { doctor: { select: doctorSelectSeguro } },
     });
   }
 

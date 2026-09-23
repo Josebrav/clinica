@@ -89,11 +89,12 @@ export async function eliminarDoctor(id: string, token: string) {
 
 export async function getTurnosAdmin(
   token: string,
-  params: { doctorId?: string; estado?: EstadoTurno } = {},
+  params: { doctorId?: string; estado?: EstadoTurno; fecha?: string } = {},
 ): Promise<Turno[]> {
   const query = new URLSearchParams();
   if (params.doctorId) query.set('doctorId', params.doctorId);
   if (params.estado) query.set('estado', params.estado);
+  if (params.fecha) query.set('fecha', params.fecha);
   const qs = query.toString();
   const res = await fetch(
     `${API_URL}/turnos/admin/all${qs ? `?${qs}` : ''}`,

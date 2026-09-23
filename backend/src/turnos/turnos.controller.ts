@@ -32,8 +32,9 @@ export class TurnosController {
     @CurrentUser() user: AuthUser,
     @Query('doctorId') doctorId?: string,
     @Query('estado') estado?: EstadoTurno,
+    @Query('fecha') fecha?: string,
   ) {
-    return this.turnosService.findAllForAdmin(user, doctorId, estado);
+    return this.turnosService.findAllForAdmin(user, doctorId, estado, fecha);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -141,7 +141,10 @@ export default function AdminTurnosPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold">Turnos</h1>
+      <h1 className="text-2xl font-bold text-gray-900">Turnos</h1>
+      <p className="mt-1 mb-6 text-sm text-gray-500">
+        Cargar horarios disponibles y asignar turnos a pacientes.
+      </p>
 
       {esMedico ? (
         <p className="mb-6 text-sm text-gray-600">

@@ -131,7 +131,12 @@ export default function AdminMedicosPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Médicos</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Médicos</h1>
+          <p className="mt-1 text-sm text-gray-500">
+            Agregar, editar o dar de baja médicos.
+          </p>
+        </div>
         <button
           onClick={abrirNuevo}
           className="rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:shadow-md"
