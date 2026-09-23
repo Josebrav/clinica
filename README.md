@@ -1,4 +1,4 @@
-# Clínica — sitio web + panel de secretaría
+# Centro de especialidades médicas Edelweiss — sitio web + panel
 
 Proyecto compuesto por dos aplicaciones:
 

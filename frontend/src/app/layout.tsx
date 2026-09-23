@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { siteConfig } from "@/lib/site-config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Clínica",
-  description: "Sitio de la clínica: médicos, especialidades y turnos",
+  title: siteConfig.nombre,
+  description: `${siteConfig.nombre}: médicos, especialidades y turnos`,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
