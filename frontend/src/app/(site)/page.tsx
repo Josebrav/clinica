@@ -42,7 +42,7 @@ export default async function HomePage() {
           <span className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
             <Stethoscope size={28} />
           </span>
-          <h1 className="text-6xl font-bold sm:text-7xl lg:text-8xl">
+          <h1 className="text-7xl font-bold sm:text-8xl lg:text-9xl">
             {siteConfig.marca}
           </h1>
           <p className="mt-4 text-2xl font-medium text-blue-50 sm:text-3xl">
