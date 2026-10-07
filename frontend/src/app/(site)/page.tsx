@@ -35,9 +35,9 @@ export default async function HomePage() {
         <img
           src={stockImages.hero()}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover grayscale-[40%]"
+          className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-950/95 via-stone-900/80 to-olive-900/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-stone-950/80 via-stone-900/60 to-olive-900/40" />
         <Container className="relative flex flex-col items-center py-20 text-center text-white sm:py-28 lg:py-32">
           <span className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
             <Stethoscope size={28} />
