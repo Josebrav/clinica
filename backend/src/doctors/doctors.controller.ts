@@ -19,6 +19,11 @@ import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { DoctorsService } from './doctors.service';
 import { doctorPhotoMulterOptions } from './multer.config';
 
+function datosFoto(foto?: Express.Multer.File) {
+  if (!foto) return undefined;
+  return { fotoUrl: foto.path, fotoPublicId: foto.filename };
+}
+
 @Controller('doctors')
 export class DoctorsController {
   constructor(private readonly doctorsService: DoctorsService) {}
@@ -48,8 +53,7 @@ export class DoctorsController {
     @Body() createDoctorDto: CreateDoctorDto,
     @UploadedFile() foto?: Express.Multer.File,
   ) {
-    const fotoUrl = foto ? `/uploads/doctors/${foto.filename}` : undefined;
-    return this.doctorsService.create(createDoctorDto, fotoUrl);
+    return this.doctorsService.create(createDoctorDto, datosFoto(foto));
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -61,8 +65,7 @@ export class DoctorsController {
     @Body() updateDoctorDto: UpdateDoctorDto,
     @UploadedFile() foto?: Express.Multer.File,
   ) {
-    const fotoUrl = foto ? `/uploads/doctors/${foto.filename}` : undefined;
-    return this.doctorsService.update(id, updateDoctorDto, fotoUrl);
+    return this.doctorsService.update(id, updateDoctorDto, datosFoto(foto));
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)

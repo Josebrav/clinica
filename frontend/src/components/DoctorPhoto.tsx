@@ -24,10 +24,13 @@ export function DoctorPhoto({
   className?: string;
 }) {
   if (doctor.fotoUrl) {
+    const src = doctor.fotoUrl.startsWith('http')
+      ? doctor.fotoUrl
+      : `${API_URL}${doctor.fotoUrl}`;
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={`${API_URL}${doctor.fotoUrl}`}
+        src={src}
         alt={`${doctor.nombre} ${doctor.apellido}`}
         className={`object-cover ${className}`}
       />

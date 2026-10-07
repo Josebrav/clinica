@@ -14,6 +14,7 @@ model Doctor {
   apellido     String
   especialidad String
   fotoUrl      String?
+  fotoPublicId String?
   descripcion  String?
   activo       Boolean  @default(true)
   username     String?  @unique

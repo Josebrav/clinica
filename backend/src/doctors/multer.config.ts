@@ -1,15 +1,14 @@
 import { BadRequestException } from '@nestjs/common';
-import { randomUUID } from 'crypto';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import { cloudinary } from './cloudinary.config';
 
 export const doctorPhotoMulterOptions = {
-  storage: diskStorage({
-    destination: './uploads/doctors',
-    filename: (_req, file, callback) => {
-      const uniqueName = `${randomUUID()}${extname(file.originalname)}`;
-      callback(null, uniqueName);
-    },
+  storage: new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder: 'edelweiss/doctors',
+      allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+    } as never,
   }),
   fileFilter: (_req: unknown, file: Express.Multer.File, callback: any) => {
     if (!file.mimetype.match(/^image\/(jpg|jpeg|png|webp)$/)) {

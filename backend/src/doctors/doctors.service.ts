@@ -4,8 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import * as fs from 'fs';
-import * as path from 'path';
+import { cloudinary } from './cloudinary.config';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
@@ -26,6 +25,16 @@ const adminSelect = {
   createdAt: true,
   updatedAt: true,
 } as const;
+
+interface FotoSubida {
+  fotoUrl?: string;
+  fotoPublicId?: string;
+}
+
+async function eliminarFotoCloudinary(publicId?: string | null) {
+  if (!publicId) return;
+  await cloudinary.uploader.destroy(publicId).catch(() => undefined);
+}
 
 @Injectable()
 export class DoctorsService {
@@ -66,32 +75,39 @@ export class DoctorsService {
     }
   }
 
-  async create(dto: CreateDoctorDto, fotoUrl?: string) {
+  async create(dto: CreateDoctorDto, foto?: FotoSubida) {
     const { password, ...resto } = dto;
     await this.assertUsernameDisponible(dto.username);
     const passwordHash = await bcrypt.hash(password, 10);
     return this.prisma.doctor.create({
-      data: { ...resto, passwordHash, fotoUrl },
+      data: { ...resto, passwordHash, ...foto },
       select: adminSelect,
     });
   }
 
-  async update(id: string, dto: UpdateDoctorDto, fotoUrl?: string) {
-    await this.findOne(id);
+  async update(id: string, dto: UpdateDoctorDto, foto?: FotoSubida) {
+    const actual = await this.prisma.doctor.findUnique({ where: { id } });
+    if (!actual) {
+      throw new NotFoundException('Médico no encontrado');
+    }
     const { password, ...resto } = dto;
     if (resto.username) {
       await this.assertUsernameDisponible(resto.username, id);
     }
     const passwordHash = password ? await bcrypt.hash(password, 10) : undefined;
-    return this.prisma.doctor.update({
+    const actualizado = await this.prisma.doctor.update({
       where: { id },
       data: {
         ...resto,
         ...(passwordHash ? { passwordHash } : {}),
-        ...(fotoUrl ? { fotoUrl } : {}),
+        ...foto,
       },
       select: adminSelect,
     });
+    if (foto?.fotoPublicId && actual.fotoPublicId) {
+      await eliminarFotoCloudinary(actual.fotoPublicId);
+    }
+    return actualizado;
   }
 
   async remove(id: string) {
@@ -99,10 +115,7 @@ export class DoctorsService {
     if (!doctor) {
       throw new NotFoundException('Médico no encontrado');
     }
-    if (doctor.fotoUrl) {
-      const filePath = path.join(process.cwd(), doctor.fotoUrl);
-      fs.promises.unlink(filePath).catch(() => undefined);
-    }
+    await eliminarFotoCloudinary(doctor.fotoPublicId);
     await this.prisma.doctor.delete({ where: { id } });
     return { ok: true };
   }
