@@ -38,13 +38,14 @@ export default async function HomePage() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-blue-900/80 to-teal-800/50" />
-        <Container className="relative py-20 text-white sm:py-28 lg:py-32">
+        <Container className="relative flex flex-col items-center py-20 text-center text-white sm:py-28 lg:py-32">
           <span className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
             <Stethoscope size={28} />
           </span>
-          <h1 className="max-w-2xl text-4xl font-bold sm:text-5xl">
-            {siteConfig.nombre}
-          </h1>
+          <h1 className="text-4xl font-bold sm:text-5xl">{siteConfig.marca}</h1>
+          <p className="mt-2 text-lg font-medium text-blue-50 sm:text-xl">
+            {siteConfig.subtitulo}
+          </p>
           <p className="mt-4 max-w-lg text-lg text-blue-50">
             {siteConfig.tagline}
           </p>

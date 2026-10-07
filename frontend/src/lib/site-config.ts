@@ -1,5 +1,7 @@
 export const siteConfig = {
   nombre: 'Centro de especialidades médicas Edelweiss',
+  marca: 'Edelweiss',
+  subtitulo: 'Especialidades médicas integradas',
   tagline: 'Atención médica cercana y profesional.',
   direccion: 'Alderete 500, Neuquen Capital, Argentina',
   telefono: '+54 9 11 0000-0000',
