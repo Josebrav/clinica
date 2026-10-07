@@ -3,10 +3,10 @@ import { API_URL } from '@/lib/api';
 import type { Doctor } from '@/lib/types';
 
 const GRADIENTES = [
-  'from-blue-500 to-teal-400',
-  'from-indigo-500 to-blue-400',
-  'from-teal-500 to-emerald-400',
-  'from-sky-500 to-cyan-400',
+  'from-olive-600 to-stone-500',
+  'from-stone-600 to-olive-500',
+  'from-olive-700 to-olive-400',
+  'from-stone-700 to-stone-400',
 ];
 
 function gradienteFor(id: string) {

@@ -10,6 +10,19 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Verde oliva: acento principal del sitio, en vez de azul/teal */
+  --color-olive-50: #f6f7ed;
+  --color-olive-100: #eaedd4;
+  --color-olive-200: #d5dba9;
+  --color-olive-300: #bac879;
+  --color-olive-400: #a0b354;
+  --color-olive-500: #869838;
+  --color-olive-600: #6b7a2c;
+  --color-olive-700: #536024;
+  --color-olive-800: #434d21;
+  --color-olive-900: #39411f;
+  --color-olive-950: #1e2410;
 }
 
 @media (prefers-color-scheme: dark) {
