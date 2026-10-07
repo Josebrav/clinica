@@ -7,7 +7,7 @@ import { siteConfig } from '@/lib/site-config';
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-20">
-      <div className="hidden bg-stone-800 text-white sm:block">
+      <div className="hidden bg-olive-800 text-white sm:block">
         <Container className="flex items-center justify-between py-2 text-xs">
           <div className="flex items-center gap-5">
             <a
