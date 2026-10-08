@@ -5,9 +5,10 @@ export class AsignarTurnoDto {
   @MinLength(2)
   pacienteNombre: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(6)
-  pacienteTelefono: string;
+  pacienteTelefono?: string;
 
   @IsOptional()
   @IsString()

@@ -1,9 +1,14 @@
 import { CalendarDays, Clock, MessageCircle } from 'lucide-react';
 import { notFound } from 'next/navigation';
+import { FaInstagram } from 'react-icons/fa';
 import { getDoctorPublic, getTurnosPublic } from '@/lib/api';
 import { Container } from '@/components/Container';
 import { DoctorPhoto } from '@/components/DoctorPhoto';
 import { linkWhatsappTurno } from '@/lib/whatsapp';
+
+function normalizarUrl(url: string) {
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
 
 export default async function MedicoDetallePage({
   params,
@@ -30,9 +35,22 @@ export default async function MedicoDetallePage({
           <h1 className="text-2xl font-bold text-stone-900">
             {doctor.nombre} {doctor.apellido}
           </h1>
-          <p className="mt-1 inline-block rounded-full bg-olive-100 px-3 py-1 text-sm font-medium text-olive-800">
-            {doctor.especialidad}
-          </p>
+          <div className="mt-1 flex flex-wrap items-center gap-2">
+            <p className="inline-block rounded-full bg-olive-100 px-3 py-1 text-sm font-medium text-olive-800">
+              {doctor.especialidad}
+            </p>
+            {doctor.instagramUrl && (
+              <a
+                href={normalizarUrl(doctor.instagramUrl)}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-stone-200 text-stone-700 transition hover:bg-olive-100 hover:text-olive-800"
+              >
+                <FaInstagram size={16} />
+              </a>
+            )}
+          </div>
           {doctor.descripcion && (
             <p className="mt-3 max-w-xl text-stone-600">{doctor.descripcion}</p>
           )}

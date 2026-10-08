@@ -1,13 +1,16 @@
 import {
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { cloudinary } from './cloudinary.config';
+import type { AuthUser } from '../auth/role';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { UpdateInstagramDto } from './dto/update-instagram.dto';
 
 const publicSelect = {
   id: true,
@@ -16,6 +19,7 @@ const publicSelect = {
   especialidad: true,
   fotoUrl: true,
   descripcion: true,
+  instagramUrl: true,
   activo: true,
 } as const;
 
@@ -108,6 +112,25 @@ export class DoctorsService {
       await eliminarFotoCloudinary(actual.fotoPublicId);
     }
     return actualizado;
+  }
+
+  async updateInstagram(
+    id: string,
+    dto: UpdateInstagramDto,
+    requester: AuthUser,
+  ) {
+    if (requester.role === 'MEDICO' && requester.doctorId !== id) {
+      throw new ForbiddenException('No podés editar el perfil de otro médico');
+    }
+    const doctor = await this.prisma.doctor.findUnique({ where: { id } });
+    if (!doctor) {
+      throw new NotFoundException('Médico no encontrado');
+    }
+    return this.prisma.doctor.update({
+      where: { id },
+      data: { instagramUrl: dto.instagramUrl || null },
+      select: publicSelect,
+    });
   }
 
   async remove(id: string) {

@@ -16,6 +16,7 @@ model Doctor {
   fotoUrl      String?
   fotoPublicId String?
   descripcion  String?
+  instagramUrl String?
   activo       Boolean  @default(true)
   username     String?  @unique
   passwordHash String?

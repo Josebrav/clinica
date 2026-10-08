@@ -11,11 +11,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { CurrentUser } from '../auth/current-user.decorator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import type { AuthUser } from '../auth/role';
 import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/roles.guard';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { UpdateInstagramDto } from './dto/update-instagram.dto';
 import { DoctorsService } from './doctors.service';
 import { doctorPhotoMulterOptions } from './multer.config';
 
@@ -66,6 +69,16 @@ export class DoctorsController {
     @UploadedFile() foto?: Express.Multer.File,
   ) {
     return this.doctorsService.update(id, updateDoctorDto, datosFoto(foto));
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/instagram')
+  updateInstagram(
+    @Param('id') id: string,
+    @Body() updateInstagramDto: UpdateInstagramDto,
+    @CurrentUser() user: AuthUser,
+  ) {
+    return this.doctorsService.updateInstagram(id, updateInstagramDto, user);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)

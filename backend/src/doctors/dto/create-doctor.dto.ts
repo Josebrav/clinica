@@ -19,6 +19,10 @@ export class CreateDoctorDto {
   descripcion?: string;
 
   @IsOptional()
+  @IsString()
+  instagramUrl?: string;
+
+  @IsOptional()
   @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   activo?: boolean;

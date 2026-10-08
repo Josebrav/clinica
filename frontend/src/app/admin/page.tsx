@@ -9,6 +9,9 @@ import {
   Wallet,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState, type FormEvent } from 'react';
+import { FaInstagram } from 'react-icons/fa';
+import { actualizarInstagram, getDoctorPublic } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 
 function DashboardCard({
@@ -40,8 +43,76 @@ function DashboardCard({
   );
 }
 
+function MiInstagramCard({ doctorId, token }: { doctorId: string; token: string }) {
+  const [instagramUrl, setInstagramUrl] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [mensaje, setMensaje] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    getDoctorPublic(doctorId)
+      .then((doctor) => {
+        setInstagramUrl(doctor.instagramUrl ?? '');
+      })
+      .catch(() => undefined)
+      .finally(() => setLoading(false));
+  }, [doctorId]);
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setSaving(true);
+    setError(null);
+    setMensaje(null);
+    try {
+      await actualizarInstagram(doctorId, instagramUrl, token);
+      setMensaje('Guardado.');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al guardar');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="rounded-2xl border bg-white p-6 shadow-sm sm:col-span-2 lg:col-span-3">
+      <div className="flex items-center gap-2">
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-pink-500 to-amber-400 text-white">
+          <FaInstagram size={16} />
+        </span>
+        <h2 className="font-semibold text-gray-900">Mi Instagram</h2>
+      </div>
+      <p className="mt-1 text-sm text-gray-500">
+        Este link aparece como ícono en tu perfil público.
+      </p>
+      {loading ? (
+        <p className="mt-3 text-sm text-gray-400">Cargando...</p>
+      ) : (
+        <form onSubmit={handleSubmit} className="mt-3 flex flex-col gap-2 sm:flex-row">
+          <input
+            type="url"
+            placeholder="https://instagram.com/usuario"
+            className="flex-1 rounded-md border px-3 py-2"
+            value={instagramUrl}
+            onChange={(e) => setInstagramUrl(e.target.value)}
+          />
+          <button
+            type="submit"
+            disabled={saving}
+            className="rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:shadow-md disabled:opacity-60"
+          >
+            {saving ? 'Guardando...' : 'Guardar'}
+          </button>
+        </form>
+      )}
+      {mensaje && <p className="mt-2 text-sm text-green-700">{mensaje}</p>}
+      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+    </div>
+  );
+}
+
 export default function AdminHomePage() {
-  const { role, nombreCompleto, username } = useAuth();
+  const { role, nombreCompleto, username, doctorId, token } = useAuth();
 
   const titulo =
     role === 'JEFA'
@@ -97,6 +168,9 @@ export default function AdminHomePage() {
               descripcion="Turnos por médico, ocupación y resumen financiero."
             />
           </>
+        )}
+        {role === 'MEDICO' && doctorId && token && (
+          <MiInstagramCard doctorId={doctorId} token={token} />
         )}
       </div>
     </div>

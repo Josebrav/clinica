@@ -324,10 +324,9 @@ export default function AdminTurnosPage() {
             />
 
             <label className="mb-1 block text-sm font-medium text-gray-700">
-              Teléfono
+              Teléfono (opcional)
             </label>
             <input
-              required
               className="mb-3 w-full rounded-md border px-3 py-2"
               value={asignarForm.pacienteTelefono}
               onChange={(e) =>

@@ -5,6 +5,7 @@ export interface Doctor {
   especialidad: string;
   fotoUrl: string | null;
   descripcion: string | null;
+  instagramUrl?: string | null;
   activo: boolean;
   username?: string | null;
 }

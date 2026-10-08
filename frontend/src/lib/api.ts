@@ -117,7 +117,7 @@ export async function crearTurno(
 
 export async function asignarTurno(
   id: string,
-  data: { pacienteNombre: string; pacienteTelefono: string; notas?: string },
+  data: { pacienteNombre: string; pacienteTelefono?: string; notas?: string },
   token: string,
 ): Promise<Turno> {
   const res = await fetch(`${API_URL}/turnos/${id}/asignar`, {
@@ -180,6 +180,21 @@ export async function getStatsResumen(token: string): Promise<StatsResumen> {
   const res = await fetch(`${API_URL}/stats/resumen`, {
     headers: authHeaders(token),
     cache: 'no-store',
+  });
+  return handle(res);
+}
+
+// --- Médico: perfil propio ---
+
+export async function actualizarInstagram(
+  doctorId: string,
+  instagramUrl: string,
+  token: string,
+): Promise<Doctor> {
+  const res = await fetch(`${API_URL}/doctors/${doctorId}/instagram`, {
+    method: 'PATCH',
+    headers: { ...authHeaders(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ instagramUrl }),
   });
   return handle(res);
 }

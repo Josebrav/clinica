@@ -16,6 +16,7 @@ const emptyForm = {
   apellido: '',
   especialidad: '',
   descripcion: '',
+  instagramUrl: '',
   activo: true,
   username: '',
   password: '',
@@ -69,6 +70,7 @@ export default function AdminMedicosPage() {
       apellido: doctor.apellido,
       especialidad: doctor.especialidad,
       descripcion: doctor.descripcion ?? '',
+      instagramUrl: doctor.instagramUrl ?? '',
       activo: doctor.activo,
       username: doctor.username ?? '',
       password: '',
@@ -89,6 +91,7 @@ export default function AdminMedicosPage() {
     formData.append('apellido', form.apellido);
     formData.append('especialidad', form.especialidad);
     formData.append('descripcion', form.descripcion);
+    formData.append('instagramUrl', form.instagramUrl);
     formData.append('activo', String(form.activo));
     formData.append('username', form.username);
     if (form.password) formData.append('password', form.password);
@@ -256,6 +259,19 @@ export default function AdminMedicosPage() {
               value={form.descripcion}
               onChange={(e) =>
                 setForm((f) => ({ ...f, descripcion: e.target.value }))
+              }
+            />
+
+            <label className="mt-3 mb-1 block text-sm font-medium text-gray-700">
+              Instagram (opcional)
+            </label>
+            <input
+              type="url"
+              placeholder="https://instagram.com/usuario"
+              className="w-full rounded-md border px-3 py-2"
+              value={form.instagramUrl}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, instagramUrl: e.target.value }))
               }
             />
 
