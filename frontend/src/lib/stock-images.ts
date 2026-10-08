@@ -13,4 +13,5 @@ export const stockImages = {
   equipoMedico: (w = 800, h = 600) => unsplash('1579684385127-1ef15d508118', w, h),
   consultas: (w = 800, h = 600) => unsplash('1666214280391-8ff5bd3c0bf0', w, h),
   tratamientos: (w = 800, h = 600) => unsplash('1584982751601-97dcc096659c', w, h),
+  laboratorio: (w = 800, h = 600) => unsplash('1579154204601-01588f351e67', w, h),
 };

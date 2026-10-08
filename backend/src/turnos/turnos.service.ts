@@ -20,6 +20,10 @@ const doctorSelectSeguro = {
   activo: true,
 } as const;
 
+function hoyISO() {
+  return new Date().toISOString().slice(0, 10);
+}
+
 @Injectable()
 export class TurnosService {
   constructor(private readonly prisma: PrismaService) {}
@@ -28,6 +32,7 @@ export class TurnosService {
     return this.prisma.turno.findMany({
       where: {
         estado: EstadoTurno.DISPONIBLE,
+        fecha: { gte: hoyISO() },
         ...(doctorId ? { doctorId } : {}),
       },
       orderBy: [{ fecha: 'asc' }, { horaInicio: 'asc' }],
@@ -66,6 +71,12 @@ export class TurnosService {
     });
     if (!doctor) {
       throw new NotFoundException('Médico no encontrado');
+    }
+
+    if (dto.fecha < hoyISO()) {
+      throw new BadRequestException(
+        'No se puede cargar un horario con una fecha que ya pasó',
+      );
     }
 
     return this.prisma.turno.create({

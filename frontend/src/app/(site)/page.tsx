@@ -9,8 +9,8 @@ import { stockImages } from '@/lib/stock-images';
 const servicios = [
   {
     imagen: stockImages.consultas(),
-    titulo: 'Consultas y seguimiento',
-    descripcion: 'Atención personalizada en cada etapa de tu tratamiento.',
+    titulo: 'Accesibilidad',
+    descripcion: 'Un equipo de trabajo fexible a tus tiempos y requerimientos.',
   },
 
   {
@@ -22,6 +22,11 @@ const servicios = [
     imagen: stockImages.tratamientos(),
     titulo: 'Tratamientos personalizados',
     descripcion: 'Planes adaptados a las necesidades de cada paciente.',
+  },
+  {
+    imagen: stockImages.laboratorio(),
+    titulo: 'Análisis Clínicos',
+    descripcion: 'Sistema integrado con laboratorio de alta complejidad.',
   },
 ];
 
