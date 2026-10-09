@@ -11,18 +11,18 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Verde oliva: acento principal del sitio, en vez de azul/teal */
-  --color-olive-50: #f6f7ed;
-  --color-olive-100: #eaedd4;
-  --color-olive-200: #d5dba9;
-  --color-olive-300: #bac879;
-  --color-olive-400: #a0b354;
-  --color-olive-500: #869838;
-  --color-olive-600: #6b7a2c;
-  --color-olive-700: #536024;
-  --color-olive-800: #434d21;
-  --color-olive-900: #39411f;
-  --color-olive-950: #1e2410;
+  /* Verde claro: acento principal del sitio, en vez de azul/teal */
+  --color-olive-50: #f0faf1;
+  --color-olive-100: #dcf3de;
+  --color-olive-200: #b9e6bd;
+  --color-olive-300: #8dd394;
+  --color-olive-400: #5fbd68;
+  --color-olive-500: #3fa348;
+  --color-olive-600: #2f8838;
+  --color-olive-700: #276f30;
+  --color-olive-800: #235c2b;
+  --color-olive-900: #1e4c25;
+  --color-olive-950: #0f2a14;
 }
 
 @media (prefers-color-scheme: dark) {
