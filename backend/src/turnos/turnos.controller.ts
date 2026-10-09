@@ -14,6 +14,7 @@ import { CurrentUser } from '../auth/current-user.decorator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import type { AuthUser } from '../auth/role';
 import { AsignarTurnoDto } from './dto/asignar-turno.dto';
+import { CreatePlantillaDto } from './dto/create-plantilla.dto';
 import { CreateTurnoDto } from './dto/create-turno.dto';
 import { TurnosService } from './turnos.service';
 
@@ -66,5 +67,35 @@ export class TurnosController {
   @Delete(':id')
   remove(@Param('id') id: string, @CurrentUser() user: AuthUser) {
     return this.turnosService.remove(id, user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('plantillas')
+  listarPlantillas(
+    @CurrentUser() user: AuthUser,
+    @Query('doctorId') doctorId?: string,
+  ) {
+    return this.turnosService.listarPlantillas(user, doctorId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('plantillas')
+  crearPlantilla(
+    @Body() createPlantillaDto: CreatePlantillaDto,
+    @CurrentUser() user: AuthUser,
+  ) {
+    return this.turnosService.crearPlantilla(createPlantillaDto, user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('plantillas/:id/repetir')
+  repetirPlantilla(@Param('id') id: string, @CurrentUser() user: AuthUser) {
+    return this.turnosService.repetirPlantilla(id, user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('plantillas/:id')
+  eliminarPlantilla(@Param('id') id: string, @CurrentUser() user: AuthUser) {
+    return this.turnosService.eliminarPlantilla(id, user);
   }
 }

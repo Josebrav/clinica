@@ -24,6 +24,18 @@ export interface Turno {
   notas: string | null;
 }
 
+export interface PlantillaTurno {
+  id: string;
+  doctorId: string;
+  doctor?: Doctor;
+  horaInicio: string;
+  horaFin: string;
+  intervaloMinutos: number;
+  ultimaFechaGenerada: string;
+  puedeRepetir: boolean;
+  proximaFecha: string;
+}
+
 export type Role = 'SECRETARIA' | 'MEDICO' | 'JEFA';
 
 export type TipoMovimiento = 'INGRESO' | 'EGRESO';

@@ -21,6 +21,7 @@ model Doctor {
   username     String?  @unique
   passwordHash String?
   turnos       Turno[]
+  plantillasTurno PlantillaTurno[]
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -42,6 +43,18 @@ model Turno {
   notas             String?
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
+}
+
+model PlantillaTurno {
+  id                  String   @id @default(cuid())
+  doctor              Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  doctorId            String
+  horaInicio          String
+  horaFin             String
+  intervaloMinutos    Int
+  ultimaFechaGenerada String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 enum RolAdmin {

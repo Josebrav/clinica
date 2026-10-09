@@ -2,6 +2,7 @@ import type {
   Doctor,
   EstadoTurno,
   Movimiento,
+  PlantillaTurno,
   StatsResumen,
   TipoMovimiento,
   Turno,
@@ -138,6 +139,57 @@ export async function liberarTurno(id: string, token: string): Promise<Turno> {
 
 export async function eliminarTurno(id: string, token: string) {
   const res = await fetch(`${API_URL}/turnos/${id}`, {
+    method: 'DELETE',
+    headers: authHeaders(token),
+  });
+  return handle(res);
+}
+
+// --- Admin: bloques recurrentes de turnos ---
+
+export async function getPlantillas(
+  token: string,
+  doctorId?: string,
+): Promise<PlantillaTurno[]> {
+  const qs = doctorId ? `?doctorId=${doctorId}` : '';
+  const res = await fetch(`${API_URL}/turnos/plantillas${qs}`, {
+    headers: authHeaders(token),
+    cache: 'no-store',
+  });
+  return handle(res);
+}
+
+export async function crearPlantilla(
+  data: {
+    doctorId: string;
+    fecha: string;
+    horaInicio: string;
+    horaFin: string;
+    intervaloMinutos: number;
+  },
+  token: string,
+): Promise<PlantillaTurno> {
+  const res = await fetch(`${API_URL}/turnos/plantillas`, {
+    method: 'POST',
+    headers: { ...authHeaders(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  return handle(res);
+}
+
+export async function repetirPlantilla(
+  id: string,
+  token: string,
+): Promise<PlantillaTurno> {
+  const res = await fetch(`${API_URL}/turnos/plantillas/${id}/repetir`, {
+    method: 'POST',
+    headers: authHeaders(token),
+  });
+  return handle(res);
+}
+
+export async function eliminarPlantilla(id: string, token: string) {
+  const res = await fetch(`${API_URL}/turnos/plantillas/${id}`, {
     method: 'DELETE',
     headers: authHeaders(token),
   });
